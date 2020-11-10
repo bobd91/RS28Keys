@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "RS28Keys": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
