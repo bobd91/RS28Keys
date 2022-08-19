@@ -3,7 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 using RS28Keys.ExtensionMethods;
+
+
 
 namespace RS28Keys
 {
@@ -12,6 +16,7 @@ namespace RS28Keys
         private readonly ILogger<Worker> _logger;
 
         private FootpedalStatus _status = new FootpedalStatus();
+
         public Worker(ILogger<Worker> logger)
         {
             _logger = logger;
@@ -39,10 +44,30 @@ namespace RS28Keys
         {
             FootpedalStatus newStatus = statuschange.Status;
 
-            if(newStatus.IsLeftDown != _status.IsLeftDown)
+            if (newStatus.IsLeftDown != _status.IsLeftDown)
             {
+                SendKey(VirtualKeyboard.KeyCode.VK_LSHIFT, newStatus.IsLeftDown);
+            }
+            if (newStatus.IsRightDown != _status.IsRightDown)
+            {
+                SendKey(VirtualKeyboard.KeyCode.VK_LCONTROL, newStatus.IsRightDown);
+            }
+            if (newStatus.IsMiddleDown != _status.IsMiddleDown)
+            {
+                SendKey(VirtualKeyboard.KeyCode.VK_LMENU, newStatus.IsMiddleDown);
+            }
 
+            _status = newStatus;
+        }
 
+        private void SendKey(VirtualKeyboard.KeyCode keyCode, bool isDown)
+        {
+            if(isDown)
+            {
+                VirtualKeyboard.SendKeyDown(keyCode);
+            } else
+            {
+                VirtualKeyboard.SendKeyUp(keyCode);
             }
         }
     }
