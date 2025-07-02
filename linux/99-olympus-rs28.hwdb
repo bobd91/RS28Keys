@@ -1,0 +1,5 @@
+evdev:input:b*v07B4p0218*
+ KEYBOARD_KEY_90011=leftshift
+ KEYBOARD_KEY_90012=leftctrl
+ KEYBOARD_KEY_90013=leftalt
+
